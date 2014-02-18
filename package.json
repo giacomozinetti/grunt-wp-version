@@ -1,9 +1,11 @@
 {
-  "name": "grunt-wp-version",
-  "version": "0.1.0",
+  "name": "grunt-wordpress-version",
+  "version": "0.2.0",
   "description": "Set the versions for enqueued CSS/JS in WordPress",
   "keywords": [
     "gruntplugin",
+    "assets",
+    "versions",
     "wordpress"
   ],
   "homepage": "https://github.com/roots/grunt-wp-version",
@@ -15,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/roots/grunt-wp-version.git"
+    "url": "git://github.com/giacomozinetti/grunt-wp-version.git"
   },
   "scripts": {
     "test": "grunt"
