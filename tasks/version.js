@@ -30,29 +30,31 @@ module.exports = function(grunt) {
     var regexJs = new RegExp("define\\('" + options.jsHandle + "', '(\\w*)'\\);");
 
     var content = grunt.file.read(scriptsPhp);
+
     var cssMatches = content.match(regexCss);
     if (cssMatches === null) {
       content += "\tdefine('" + options.cssHandle + "', '" + hashCss + "');\n";
     } else {
-      if (grunt.file.exists(options.css.replace('.css', '.' + cssMatches[1] + '.css'))) {
-        grunt.file.delete(options.css.replace('.css', '.' + cssMatches[1] + '.css'));
-      }
-      grunt.file.copy(options.css, options.css.replace('.css', '.' + hashCss + '.css'));
       content = content.replace(regexCss, "define('" + options.cssHandle + "', '" + hashCss + "');");
     }
+    if (grunt.file.exists(options.css.replace('.css', '.' + cssMatches[1] + '.css'))) {
+      grunt.file.delete(options.css.replace('.css', '.' + cssMatches[1] + '.css'));
+    }
+    grunt.file.copy(options.css, options.css.replace('.css', '.' + hashCss + '.css'));
+
     var jsMatches = content.match(regexJs);
     if (jsMatches === null) {
       content += "\tdefine('" + options.jsHandle + "', '" + hashJs + "');\n";
     } else {
-      if (grunt.file.exists(options.js.replace('.js', '.' + jsMatches[1] + '.js'))) {
-        grunt.file.delete(options.js.replace('.js', '.' + jsMatches[1] + '.js'));
-      }
-      grunt.file.copy(options.js, options.js.replace('.js', '.' + hashJs + '.js'));
       content = content.replace(regexJs, "define('" + options.jsHandle + "', '" + hashJs + "');");
     }
+    if (grunt.file.exists(options.js.replace('.js', '.' + jsMatches[1] + '.js'))) {
+      grunt.file.delete(options.js.replace('.js', '.' + jsMatches[1] + '.js'));
+    }
+    grunt.file.copy(options.js, options.js.replace('.js', '.' + hashJs + '.js'));
+
     grunt.file.write(scriptsPhp, content);
     grunt.log.writeln('"' + scriptsPhp + '" updated with new CSS/JS versions.');
-
   });
 
   var md5 = function(filepath) {
